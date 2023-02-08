@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+enum Feed {
+	FEED_X = 0;
+	FEED_Y = 1;
+	FEED_Z = 2;
+}
+
+message Date {
+	int32 year = 1;
+	int32 month = 2;
+	int32 day = 3;
+}
+
+message Dates {
+	repeated Date dates = 1;
+}
+
+message File {
+	Feed feed = 1; // feed that provided the data
+	string path = 2; // path to the file where the data is stored
+	string data = 3; // a JSON string with data about the fixture from the feed
+}
+
+service TestService {
+	rpc GetFiles(Dates) returns (stream File) {}; 
+}
